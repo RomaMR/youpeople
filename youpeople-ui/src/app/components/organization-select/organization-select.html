@@ -1,0 +1,15 @@
+<div layout="row" layout-fill layout-align="center center">
+    <form name="form" ng-submit="organizationSelect.openApp()" flex flex-gt-sm="50">
+        <span class="label">Select your organization</span>
+        <md-input-container>
+            <md-select class="header-select" ng-model="organizationSelect.selectedOrganization"
+                       ng-change="organizationSelect.selectOrganization()" aria-label="Organization" flex>
+                <md-option ng-value="{{organization}}" ng-repeat="organization in organizationSelect.organizations">
+                    {{organization.name}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <p>{{organizationSelect.selectedOrganization.name}}</p>
+        <md-button class="md-raised md-primary" ng-disabled="!form.$valid || !organizationSelect.selectedOrganization" ng-click="organizationSelect.openApp()">Open app</md-button>
+    </form>
+</div>

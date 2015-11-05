@@ -1,0 +1,106 @@
+<div class="fit" layout="row">
+    <div class="overflow-auto" flex-sm flex-gt-sm="45" layout="column" layout-align="center center">
+        <h1 class="md-display-1">Sign up</h1>
+
+        <form name="form" ng-submit="signUp.signUp()">
+            <div layout layout-sm="column">
+                <md-input-container flex>
+                    <label>First Name*</label>
+                    <input type="text" ng-model="signUp.user.firstName" name="firstName" required>
+
+                    <div ng-messages="form.firstName.$error" ng-if='form.firstName.$dirty'>
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Second Name*</label>
+                    <input type="text" ng-model="signUp.user.lastName" name="lastName" required>
+
+                    <div ng-messages="form.lastName.$error" ng-if='form.lastName.$dirty'>
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout layout-sm="column">
+                <md-input-container flex flex-gt-sm="65">
+                    <label>Email*</label>
+                    <input type="email" ng-model="signUp.user.email" name="email" required>
+
+                    <div ng-messages="form.email.$error" ng-if='form.email.$dirty'>
+                        <div ng-message="required">This is required.</div>
+                        <div ng-message="email">Is not valid email.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Phone Number</label>
+                    <input type="text" ng-model="signUp.user.phone" name="phone">
+                </md-input-container>
+            </div>
+            <div layout layout-sm="column">
+                <md-input-container flex>
+                    <label>Password*</label>
+                    <input type="password" ng-model="signUp.user.password" ng-minlength="4" name="password" required>
+
+                    <div ng-messages="form.password.$error" ng-if='form.password.$dirty'>
+                        <div ng-message="required">This is required.</div>
+                        <div ng-message="minlength">Less than 4 characters long.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Confirm Password*</label>
+                    <input type="password" ng-model="signUp.user.confirmPassword" ng-minlength="4"
+                           name="confirmPassword"
+                           ui-validate=" '$value==signUp.user.password' " ui-validate-watch=" 'signUp.user.password' "
+                           required>
+
+                    <div ng-messages="form.confirmPassword.$error" ng-if='form.confirmPassword.$dirty'>
+                        <div ng-message="validator">Password do not match.</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout layout-sm="column">
+                <md-input-container flex flex-gt-sm="65">
+                    <label>Organization Name*</label>
+                    <input type="text" ng-model="signUp.user.organization" name="organization" required>
+
+                    <div ng-messages="form.organization.$error" ng-if='form.organization.$dirty'>
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Position*</label>
+                    <input type="text" ng-model="signUp.user.position" name="position" required>
+
+                    <div ng-messages="form.position.$error" ng-if='form.position.$dirty'>
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout layout-sm="column">
+                <md-input-container flex>
+                    <label>Linkedin Link</label>
+                    <input type="url" ng-model="signUp.user.linkedin" name="linkedin">
+
+                    <div ng-messages="form.linkedin.$error" ng-if='form.linkedin.$dirty'>
+                        <div ng-message="url">Is not a link.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Facebook Link</label>
+                    <input type="url" ng-model="signUp.user.facebook" name="facebook">
+
+                    <div ng-messages="form.facebookLink.$error" ng-if='form.facebook.$dirty'>
+                        <div ng-message="url">Is not a link.</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row" layout-align="end center">
+                <a class="md-button md-default-theme" href="#/sign-in">Already registered?</a>
+                <md-button class="md-raised md-primary" ng-disabled="!form.$valid">Sign Up</md-button>
+            </div>
+        </form>
+    </div>
+    <div flex class="image-background sign-up-image relative" hide-sm>
+        <div class="black-overlay"></div>
+    </div>
+</div>

@@ -1,0 +1,1 @@
+include 'youpeople-controllers', 'youpeople-domain', 'youpeople-facade', 'youpeople-migrations', 'youpeople-persistence', 'youpeople-services'

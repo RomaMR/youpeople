@@ -1,0 +1,206 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		jcenter()
+	}
+	dependencies {
+		classpath('org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE')
+		classpath 'org.liquibase:liquibase-gradle-plugin:1.1.0'
+		classpath 'org.postgresql:postgresql:9.4-1201-jdbc41'
+		classpath 'org.yaml:snakeyaml:1.15'
+		classpath 'com.moowork.gradle:gradle-node-plugin:0.9'
+		classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
+	}
+}
+
+// Constants
+def javaVersion = "1.8"
+def springVersion = "4.1.7.RELEASE"
+def springBootVersion = "1.2.5.RELEASE"
+def querydslVersion = "3.6.6"
+
+allprojects {
+
+	apply plugin: 'eclipse'
+
+	group = 'com.optigra'
+	version = '0.0.2'
+}
+
+subprojects {
+
+	apply plugin: 'java'
+	sourceCompatibility = javaVersion
+	targetCompatibility = javaVersion
+
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+
+	dependencies {
+
+		//Spring
+		compile "org.springframework.boot:spring-boot:${springBootVersion}"
+		compile "org.springframework.boot:spring-boot-actuator:${springBootVersion}"
+		compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
+		compile "org.springframework.boot:spring-boot-loader-tools:${springBootVersion}"
+		compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+		compile "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+		compile "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+		compile "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
+		compile "org.springframework.boot:spring-boot-starter-logging:${springBootVersion}"
+
+
+		//Testing
+		testCompile 'junit:junit:4.12'
+		testCompile 'org.hamcrest:hamcrest-all:1.3'
+		testCompile 'org.mockito:mockito-core:1.10.19'
+		testCompile "org.springframework:spring-test:${springVersion}"
+
+		//Other
+		compile 'joda-time:joda-time:1.3'
+		compile 'org.apache.commons:commons-lang3:3.4'
+		compile 'org.apache.directory.studio:org.apache.commons.codec:1.8'
+		compile 'org.facebook4j:facebook4j-core:2.3.0'
+		compile 'org.apache.poi:poi:3.9'
+		compile 'org.apache.poi:poi-ooxml:3.9'
+		compile 'com.mangofactory:swagger-springmvc:0.9.5'
+		compile 'org.ajar:swagger-spring-mvc-ui:0.4'
+
+
+		//Database
+		compile 'org.hibernate:hibernate-core:4.3.10.Final'
+		compile 'postgresql:postgresql:9.1-901-1.jdbc4'
+		compile 'org.springframework.data:spring-data-envers:0.2.0.RELEASE'
+	}
+}
+
+project(':youpeople-facade') {
+
+	dependencies {
+		compile project(':youpeople-domain')
+		compile project(':youpeople-services')
+	}
+}
+
+project(':youpeople-controllers') {
+
+	apply plugin: 'war'
+	apply plugin: 'eclipse-wtp'
+	apply plugin: 'spring-boot'
+
+	dependencies {
+		compile project(':youpeople-domain')
+		compile project(':youpeople-facade')
+		compile project(':youpeople-services')
+		compile project(':youpeople-persistence')
+		providedRuntime "org.springframework.boot:spring-boot-starter-tomcat:${springBootVersion}"
+	}
+}
+
+project(':youpeople-services') {
+
+	dependencies {
+		compile project(':youpeople-domain')
+		compile project(':youpeople-persistence')
+		compile 'org.jsoup:jsoup:1.7.2'
+		compile 'org.apache.httpcomponents:httpclient:4.5'
+		// TODO consider using BatchFB
+		compile 'com.restfb:restfb:1.14.1'
+		
+	}
+}
+
+project(':youpeople-domain') {
+	configurations { querydslapt }
+	
+	sourceSets  {
+		generated{
+			java{
+				srcDir 'src/main/generated'
+			}
+		}
+	}
+	
+	dependencies {
+
+		// QueryDSL
+		compile "com.mysema.querydsl:querydsl-core:${querydslVersion}"
+		compile "com.mysema.querydsl:querydsl-sql:${querydslVersion}"
+		compile "com.mysema.querydsl:querydsl-jpa:${querydslVersion}"
+		querydslapt "com.mysema.querydsl:querydsl-apt:${querydslVersion}"
+	}
+	
+	task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+		println 'generateQueryDSL'
+		source = sourceSets.main.java
+		classpath = configurations.compile + configurations.querydslapt
+		options.compilerArgs = [
+			"-proc:only",
+			"-processor",
+			"com.mysema.query.apt.jpa.JPAAnnotationProcessor"
+		]
+		destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+	}
+
+	compileJava {
+		println 'compileJava'
+		dependsOn generateQueryDSL
+		source generateQueryDSL.destinationDir
+	}
+
+	compileGeneratedJava {
+		println 'compileGeneratedJava'
+		dependsOn generateQueryDSL
+		options.warnings = true
+		classpath += sourceSets.main.runtimeClasspath
+	}
+
+	clean {
+		delete sourceSets.generated.java.srcDirs
+	}
+
+	
+}
+
+project(':youpeople-persistence') {
+
+	dependencies {
+		compile project(':youpeople-domain')
+		compile "org.springframework:spring-webmvc:${springVersion}"
+	}
+
+}
+
+project(':youpeople-migrations') {
+
+	apply plugin: 'org.liquibase.gradle'
+
+	liquibase {
+
+		activities {
+			main {
+				changeLogFile 'youpeople-migrations/changelog.groovy'
+				url 'jdbc:postgresql://localhost:5432/youpeople'
+				username 'postgres'
+				password 'postgres'
+				driver 'org.postgresql.Driver'
+			}
+		}
+
+		runList = 'main'
+	}
+}
+
+task copyBackEnd(type: Sync, dependsOn: ":youpeople-controllers:war", 
+	description: 'Copy back end WAR files to general build directory') {
+	File backendBuildDir = file(project(':youpeople-controllers').buildDir)
+	FileTree tree = fileTree(dir: backendBuildDir, include: 'libs/*.war')
+    from tree.getFiles()
+    into 'build'
+	// Remove version number from file name
+	rename("(.+)-$version(.+)",'$1$2')
+}
+	
+// TODO make tasks for building UI and copying it to the same directory

@@ -1,0 +1,26 @@
+<md-toolbar class="md-tall">
+    <div flex>
+        <div class="md-toolbar-tools">
+            <span flex></span>
+                <md-button ui-sref="organizationSelect" class="md-icon-button" aria-label="Select organization">
+                    <i class="material-icons md-light">list</i>
+                </md-button>
+            <md-button class="md-icon-button" aria-label="Log out" ng-click="app.signOut()">
+                <i class="material-icons md-light">exit_to_app</i>
+            </md-button>
+        </div>
+    </div>
+
+    <div layout="row">
+        <md-tabs class="header-tabs" md-border-bottom md-autoselect flex>
+            <md-tab><a ui-sref="app.contactList.internet">Contact List</a></md-tab>
+            <md-tab><a ui-sref="app.dashboard">Dashboard</a></md-tab>
+            <md-tab><a ui-sref="app.events">Events</a></md-tab>
+            <md-tab><a ui-sref="app.posts">Posts</a></md-tab>
+            <md-tab><a ui-sref="app.emailing">Emailing</a></md-tab>
+            <md-tab><a ui-sref="app.organizations">My Organizations</a></md-tab>
+        </md-tabs>
+    </div>
+</md-toolbar>
+
+<div ui-view></div>

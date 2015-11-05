@@ -1,0 +1,85 @@
+<div class="results-card" layout="row" layout-align="center">
+    <md-card class="relative" flex-sm flex-gt-sm="65">
+        <md-button class="md-icon-button back-button" aria-label="Back" back-button>
+            <i class="material-icons md-light">close</i>
+        </md-button>
+        <md-card-content layout-sm="column" layout-gt-sm="row">
+            <div class="text-center" flex-sm flex-gt-sm="30" layout-align="center center">
+                <div class="element-round image-background person-img"
+                     style="background: url({{person.person.profilePicture}})"></div>
+                <span class="connections-number">Number of connections: {{person.person.numberOfConnections}}</span>
+            </div>
+            <div flex>
+                <h2>{{person.person.firstName + " " + person.person.lastName}}</h2>
+
+                <div class="information-block" ng-show="person.person.workEmail">
+                    <span class="profile-label">Work e-mail</span>
+                    <span class="label-info">{{person.person.workEmail}}</span>
+                </div>
+                <div class="information-block" ng-show="person.person.personalEmail">
+                    <span class="profile-label">Personal e-mail</span>
+                    <span class="label-info">{{person.person.personalEmail}}</span>
+                </div>
+                <div class="information-block" ng-show="person.person.industry">
+                    <span class="profile-label">Industry</span>
+                    <span class="label-info">{{person.person.industry.name}}</span>
+                </div>
+                <div class="information-block" ng-show="person.person.locality">
+                    <span class="profile-label">Locality</span>
+                    <span class="label-info">{{person.person.locality}}</span>
+                </div>
+                <div class="information-block" ng-show="person.person.jobs.length > 0">
+                    <span class="profile-label">Jobs</span>
+
+                    <div class="label-info" layout="horizontal"
+                         ng-repeat="job in person.person.jobs">
+                        <div class="text-right" flex="25">
+                            {{job.startDate | date: "MMM, yyyy"}} -<br> {{job.endDate | date: "MMM, yyyy"}}
+                            <span ng-hide="job.endDate">Current</span>
+                        </div>
+                        <div flex>
+                            <span class="position block">{{job.position}}</span>
+                            <span>{{job.organization.name}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="information-block" ng-show="person.person.volunteerings.length > 0">
+                    <span class="profile-label">Volunteering</span>
+
+                    <div class="label-info" layout="horizontal"
+                         ng-repeat="volunteering in person.person.volunteerings">
+                        <div class="text-right" flex="25">
+                            {{volunteering.startDate | date: "MMM, yyyy"}} -<br> {{volunteering.endDate | date: "MMM,
+                            yyyy"}}
+                            <span ng-hide="volunteering.endDate">Current</span>
+                        </div>
+                        <div flex>
+                            <span class="position block">{{volunteering.cause}}</span>
+                            <span>{{volunteering.organization.name}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="information-block" ng-show="person.person.educations.length > 0">
+                    <span class="profile-label">Education</span>
+
+                    <div class="label-info" layout="horizontal"
+                         ng-repeat="education in person.person.educations">
+                        <div class="text-right" flex="25">
+                            {{education.startDate | date: "MMM, yyyy"}} -<br> {{education.endDate | date: "MMM, yyyy"}}
+                            <span ng-hide="education.endDate">Current</span>
+                        </div>
+                        <div flex>
+                            <span class="position block">{{education.degree + " at " + education.fieldOfStudy}}</span>
+                            <span>{{education.organization.name}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="information-block">
+                    <span class="profile-label">Social networks</span>
+                    <span class="label-info"><a href="https://www.linkedin.com/{{person.person.linkedinProfileId}}"
+                                                target="_blank">Linkedin</a></span>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
+</div>

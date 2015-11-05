@@ -1,0 +1,64 @@
+.list-inline,
+.datamaps-legend {
+  padding: 0;
+}
+
+.key {
+  padding: 0 10px;
+  display: inline-block;
+}
+
+.dashboard-row {
+  margin-bottom: 10px;
+}
+
+.graph-title {
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.sub-tabs {
+  md-tabs-canvas {
+    height: 40px;
+  }
+  md-tabs-wrapper {
+    background: #FAFAFA;
+  }
+  md-ink-bar {
+    color: #5C6BC0;
+    background: #5C6BC0;
+  }
+  .md-tab {
+    padding: 8px 20px;
+    font-size: .85em;
+    color: rgba(0, 0, 0, 0.4);
+    &.md-active, &.md-focused {
+      color: #5C6BC0;
+    }
+  }
+}
+
+.top-count-wrapper {
+  padding: 20px 30px;
+  border-bottom: 1px solid rgba(64, 84, 178, 0.25);
+  color: rgba(0, 0, 0, 0.5);
+  font-size: .85em;
+  &:last-of-type {
+    border-bottom: none;
+  }
+  .count {
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.9);
+  }
+  .percentage, .percentage-label {
+    font-size: 0.9em;
+  }
+  .percentage {
+    &.plus {
+      color: #4CAF50;
+    }
+    &.minus {
+      color: #F44336;
+    }
+  }
+}

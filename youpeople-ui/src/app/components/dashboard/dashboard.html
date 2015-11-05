@@ -1,0 +1,148 @@
+<md-tabs class="sub-tabs" md-dynamic-height md-border-bottom>
+    <md-tab label="Industries">
+        <div class="results-card">
+            <div class="dashboard-row" layout-sm="column" layout-gt-sm="row" layout-align="left">
+                <div class="graph-wrapper" flex>
+                    <h4 class="graph-title">Industries group</h4>
+                    <md-card>
+                        <md-card-content>
+                            <nvd3 options="dashboard.industriesAggregationOptions"
+                                  data="dashboard.industriesAggregationData"></nvd3>
+                        </md-card-content>
+                    </md-card>
+                </div>
+                <div class="graph-wrapper" flex>
+                    <h4 class="graph-title">{{dashboard.selectedIndustry}}</h4>
+                    <md-card>
+                        <md-card-content>
+                            <nvd3 options="dashboard.industriesOptions"
+                                  data="dashboard.industriesData"></nvd3>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </md-tab>
+    <md-tab label="Map">
+        <div class="results-card">
+            <div class="dashboard-row" layout-sm="column" layout-gt-sm="row" layout-align="left">
+                <div class="graph-wrapper" flex>
+                    <h4 class="graph-title">Alumni map</h4>
+                    <md-card>
+                        <md-card-content>
+                            <datamap map="dashboard.alumniMapOptions" plugins="dashboard.mapPlugins"
+                                     zoomable="true"></datamap>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </md-tab>
+    <md-tab label="Time">
+        <div class="results-card">
+            <div class="dashboard-row" layout-sm="column" layout-gt-sm="row" layout-align="left">
+                <div class="graph-wrapper" flex>
+                    <h4 class="graph-title">Employees Turnover</h4>
+                    <md-card>
+                        <md-card-content>
+                            <nvd3 options="dashboard.employeesTurnoverOptions"
+                                  data="dashboard.employeesTurnoverData"></nvd3>
+                        </md-card-content>
+                    </md-card>
+                </div>
+                <div class="graph-wrapper" flex>
+                    <h4 class="graph-title">Number of employees</h4>
+                    <md-card>
+                        <md-card-content>
+                            <nvd3 options="dashboard.employeesNumberOptions" data="dashboard.employeesNumberData"></nvd3>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+            <div class="dashboard-row" layout-sm="column" layout-gt-sm="row" layout-align="left">
+                <div class="graph-wrapper" flex="50">
+                    <h4 class="graph-title">Years after organization/People</h4>
+                    <md-card>
+                        <md-card-content>
+                            <nvd3 options="dashboard.yearsAfterOptions"
+                                  data="dashboard.yearsAfterData"></nvd3>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </md-tab>
+    <md-tab label="Facebook">
+        <div class="results-card">
+            <div class="dashboard-row" layout-sm="column" layout-gt-sm="row" layout-align="left">
+                <div class="graph-wrapper" flex>
+                    <h4 class="graph-title">Page likes</h4>
+                    <md-card>
+                        <div class="top-count-wrapper">
+                            <div class="relative">
+                                <span class="count">{{dashboard.totalPageLikes}}</span>
+                                <span class="count-label">Total Page Likes</span>
+                            </div>
+                            <div class="relative">
+                                <span class="percentage" ng-class="{'plus': dashboard.lastWeekChangePageLikes >= 0, 'minus': dashboard.lastWeekChangePageLikes < 0}">{{dashboard.lastWeekChangePageLikes}}%</span>
+                                <span class="percentage-label">from last week</span>
+                            </div>
+                        </div>
+                        <div class="top-count-wrapper">
+                            <div class="relative">
+                                <span class="count">{{dashboard.newPageLikes}}</span>
+                                <span class="count-label">New Page Likes</span>
+                            </div>
+                            <div class="relative">
+                                <span class="percentage" ng-class="{'plus': dashboard.lastWeekChangeNewPageLikes >= 0, 'minus': dashboard.lastWeekChangeNewPageLikes < 0}">{{dashboard.lastWeekChangeNewPageLikes}}%</span>
+                            </div>
+                        </div>
+                        <md-card-content>
+                            <nvd3 options="dashboard.fBigOptions"
+                                  data="dashboard.fPageLikesData"></nvd3>
+                        </md-card-content>
+                    </md-card>
+                </div>
+                <div class="graph-wrapper" flex>
+                    <h4 class="graph-title">Post Reach</h4>
+                    <md-card>
+                        <div class="top-count-wrapper">
+                            <div class="relative">
+                                <span class="count">{{dashboard.totalReach}}</span>
+                                <span class="count-label">Total Reach</span>
+                            </div>
+                            <div class="relative">
+                                <span class="percentage" ng-class="{'plus': dashboard.lastWeekChangeTotalReach >= 0, 'minus': dashboard.lastWeekChangeTotalReach < 0}">{{dashboard.lastWeekChangeTotalReach}}%</span>
+                                <span class="percentage-label">from last week</span>
+                            </div>
+                        </div>
+                        <div class="top-count-wrapper">
+                            <div class="relative">
+                                <span class="count">{{dashboard.postReach}}</span>
+                                <span class="count-label">Post reach</span>
+                            </div>
+                            <div class="relative">
+                                <span class="percentage" ng-class="{'plus': dashboard.lastWeekChangePostReach >= 0, 'minus': dashboard.lastWeekChangePostReach < 0}">{{dashboard.lastWeekChangePostReach}}%</span>
+                            </div>
+                        </div>
+                        <md-card-content>
+                            <nvd3 options="dashboard.fBigOptions"
+                                  data="dashboard.fPostReachData"></nvd3>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+            <div class="dashboard-row" layout-sm="column" layout-gt-sm="row" layout-align="left">
+                <div class="graph-wrapper" flex="50">
+                    <h4 class="graph-title">Post clicks</h4>
+                    <md-card>
+                        <md-card-content>
+                            <nvd3 options="dashboard.fBigOptions"
+                                  data="dashboard.fPostClicksData"></nvd3>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </md-tab>
+</md-tabs>

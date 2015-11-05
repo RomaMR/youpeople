@@ -1,0 +1,33 @@
+<div class="fit" layout="row">
+    <div flex class="image-background login-image relative" hide-sm>
+        <div class="black-overlay"></div>
+    </div>
+    <div class="overflow-auto" flex-sm flex-gt-sm="35" layout="column" layout-align="center center">
+        <h1 class="md-display-1">Youpeople</h1>
+
+        <form name="form" ng-submit="signIn.signIn()">
+            <md-input-container flex>
+                <label>Login</label>
+                <input type="email" ng-model="signIn.credentials.username" name="username" required>
+
+                <div ng-messages="form.username.$error" ng-if='form.username.$dirty'>
+                    <div ng-message="required">This is required.</div>
+                    <div ng-message="email">Is not valid email.</div>
+                </div>
+            </md-input-container>
+            <md-input-container flex>
+                <label>Password</label>
+                <input type="password" ng-model="signIn.credentials.password" ng-minlength="4" name="password" required>
+
+                <div ng-messages="form.password.$error" ng-if='form.password.$dirty'>
+                    <div ng-message="required">This is required.</div>
+                    <div ng-message="minlength">Less than 4 characters long.</div>
+                </div>
+            </md-input-container>
+            <div layout="row" layout-align="end center">
+                <a class="md-button md-default-theme" href="#/sign-up">Sign Up</a>
+                <md-button class="md-raised md-primary" ng-disabled="!form.$valid">Login</md-button>
+            </div>
+        </form>
+    </div>
+</div>

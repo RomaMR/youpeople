@@ -1,0 +1,30 @@
+.person-img {
+  margin: 40px auto 20px;
+  height: 160px;
+  width: 160px;
+}
+
+.information-block {
+  margin-bottom: 20px;
+}
+
+.profile-label {
+  margin-bottom: 4px;
+  display: block;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: .83rem;
+}
+
+.label-info {
+  margin-bottom: 10px;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: .87rem;
+}
+.back-button {
+  position: absolute;
+  right: 0;
+}
+.connections-number {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: .85rem;
+}

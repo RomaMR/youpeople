@@ -1,0 +1,30 @@
+.header-tabs {
+  a {
+    color: rgba(255, 255, 255, .65);
+    transition: color .3s;
+    &:hover, &:focus {
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+  .md-active {
+    a {
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+}
+
+.header-select {
+  margin: 0;
+  font-size: 14px;
+  &:not([disabled]):focus {
+    .md-select-value {
+      color: #fff;
+    }
+  }
+  .md-select-value,
+  .md-select-value:hover, .md-select-value:focus{
+    padding: 0 24px 5px 0;
+    text-align: right;
+    color: #fff;
+  }
+}

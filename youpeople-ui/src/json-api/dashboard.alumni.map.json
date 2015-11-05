@@ -1,0 +1,38 @@
+{
+  "USA": {
+    "value": 125,
+    "fillKey": "HIGH"
+  },
+  "CAN": {
+    "value": 50,
+    "fillKey": "MEDIUM"
+  },
+  "IRL": {
+    "value": 70,
+    "fillKey": "LOW"
+  },
+  "RUS": {
+    "value": 312,
+    "fillKey": "HIGH"
+  },
+  "JPN": {
+    "fillKey": "LOW",
+    "value": 75
+  },
+  "ITA": {
+    "fillKey": "LOW",
+    "value": 55
+  },
+  "CRI": {
+    "fillKey": "MEDIUM",
+    "value": 130
+  },
+  "KOR": {
+    "fillKey": "HIGH",
+    "value": 230
+  },
+  "DEU": {
+    "fillKey": "HIGH",
+    "value": 300
+  }
+}

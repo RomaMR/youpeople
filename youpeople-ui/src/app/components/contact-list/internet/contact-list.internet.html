@@ -1,0 +1,78 @@
+<div class="results-card" layout-sm="column" layout-gt-sm="row" layout-align="center">
+    <md-card flex-sm flex-gt-sm="70">
+        <md-progress-linear md-mode="indeterminate" ng-show="contactListInternet.loading"></md-progress-linear>
+        <md-progress-linear class="to-top" md-mode="determinate" ng-show="organizations.progressPercentage > 0"
+                            value="{{organizations.progressPercentage}}"></md-progress-linear>
+        <md-card-content class="reset-padding">
+            <md-data-table-container>
+                <table md-data-table>
+                    <thead md-order="contactListInternet.query.order" md-trigger="contactListInternet.search">
+                    <tr>
+                        <th name="Name" order-by="lastName"></th>
+                        <th name="Left company" order-by="endDate"></th>
+                        <th name="Current Job" order-by="organizationName"></th>
+                        <th name="Industry" order-by="industry"></th>
+                        <th name="Locality" order-by="locality"></th>
+                        <th name="Social networks"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="person in contactListInternet.persons">
+                        <td><a ui-sref="app.person({id: {{person.id}} })">{{person.firstName
+                            + " " +
+                            person.lastName}}</a></td>
+                        <td>
+                            <span am-time-ago="person.queriedCompanyLeaveDate"></span>
+                            <span ng-hide="person.queriedCompanyLeaveDate">Currently working</span>
+                        </td>
+                        <td>{{person.currentJob.position + ", " +
+                            person.currentJob.organization.name}}
+                        </td>
+                        <td>{{person.industry.name}}</td>
+                        <td>{{person.locality}}</td>
+                        <td>
+                            <a href="https://www.linkedin.com/{{person.linkedinProfileId}}">Linkedin</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-data-table-container>
+
+            <md-data-table-pagination md-limit="contactListInternet.query.limit" md-page="contactListInternet.query.page"
+                                      md-total="{{contactListInternet.count}}"
+                                      md-trigger="contactListInternet.search"></md-data-table-pagination>
+
+        </md-card-content>
+    </md-card>
+    <md-card flex>
+        <md-card-content>
+            <h2 class="md-title">Filters</h2>
+            <md-radio-group ng-model="contactListInternet.query.workStatus" ng-change="contactListInternet.search()">
+                <md-radio-button value="" class="md-primary">All</md-radio-button>
+                <md-radio-button value=">" class="md-primary">Currently working</md-radio-button>
+                <md-radio-button value="<" class="md-primary">Alumni</md-radio-button>
+            </md-radio-group>
+
+            <div class="filter-block" ng-show="contactListInternet.filters.localities.length > 0">
+                <span class="label">Locality</span>
+                <md-select ng-model="contactListInternet.query.locality" aria-label="Locality" ng-change="contactListInternet.filter()">
+                    <md-option value="">No Filter</md-option>
+                    <md-option ng-repeat="locality in contactListInternet.filters.localities" value="{{locality}}">
+                        {{locality}}
+                    </md-option>
+                </md-select>
+            </div>
+
+            <div class="filter-block" ng-show="contactListInternet.filters.industries.length > 0">
+                <span class="label">Industry</span>
+                <md-select ng-model="contactListInternet.query.industry" aria-label="Industry" ng-change="contactListInternet.filter()">
+                    <md-option value="">No Filter</md-option>
+                    <md-option ng-repeat="industry in contactListInternet.filters.industries" value="{{industry.name}}">
+                        {{industry.name}}
+                    </md-option>
+                </md-select>
+            </div>
+            </md-input-container>
+        </md-card-content>
+    </md-card>
+</div>
